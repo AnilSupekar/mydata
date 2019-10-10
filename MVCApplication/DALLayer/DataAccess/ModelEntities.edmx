@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="STP_DeleteEmployeeById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="STP_GetAllEmployees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="STP_GetAllEmployeesSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="input" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="STP_SaveEmployeeDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpName" Type="varchar" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Salary" Type="decimal" Mode="In" />
+          <Parameter Name="MStatus" Type="varchar" Mode="In" />
+          <Parameter Name="EmpLocation" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="STP_UpdateEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+          <Parameter Name="EmpName" Type="varchar" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Salary" Type="decimal" Mode="In" />
+          <Parameter Name="Location" Type="varchar" Mode="In" />
+          <Parameter Name="MStatus" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="EmployeeDBModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EmployeeDBEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="STP_DeleteEmployeeById">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="STP_GetAllEmployees" ReturnType="Collection(EmployeeDBModel.STP_GetAllEmployees_Result)" />
+          <FunctionImport Name="STP_GetAllEmployeesSearch" ReturnType="Collection(EmployeeDBModel.STP_GetAllEmployeesSearch_Result)">
+            <Parameter Name="input" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="STP_SaveEmployeeDetails">
+            <Parameter Name="EmpName" Mode="In" Type="String" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Salary" Mode="In" Type="Decimal" />
+            <Parameter Name="MStatus" Mode="In" Type="String" />
+            <Parameter Name="EmpLocation" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="STP_UpdateEmployee">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="EmpName" Mode="In" Type="String" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Salary" Mode="In" Type="Decimal" />
+            <Parameter Name="Location" Mode="In" Type="String" />
+            <Parameter Name="MStatus" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="STP_GetAllEmployees_Result">
+          <Property Type="Int64" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="EmpLocation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MartalStatus" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="STP_GetAllEmployeesSearch_Result">
+          <Property Type="Int64" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="EmpName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="Decimal" Name="Salary" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="EmpLocation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MartalStatus" Nullable="true" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeDBModelStoreContainer" CdmEntityContainer="EmployeeDBEntities" >
+          <FunctionImportMapping FunctionImportName="STP_DeleteEmployeeById" FunctionName="EmployeeDBModel.Store.STP_DeleteEmployeeById" />
+          <FunctionImportMapping FunctionImportName="STP_GetAllEmployees" FunctionName="EmployeeDBModel.Store.STP_GetAllEmployees">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeDBModel.STP_GetAllEmployees_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="EmpLocation" ColumnName="EmpLocation" />
+                <ScalarProperty Name="MartalStatus" ColumnName="MartalStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="STP_GetAllEmployeesSearch" FunctionName="EmployeeDBModel.Store.STP_GetAllEmployeesSearch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmployeeDBModel.STP_GetAllEmployeesSearch_Result">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="EmpLocation" ColumnName="EmpLocation" />
+                <ScalarProperty Name="MartalStatus" ColumnName="MartalStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="STP_SaveEmployeeDetails" FunctionName="EmployeeDBModel.Store.STP_SaveEmployeeDetails" />
+          <FunctionImportMapping FunctionImportName="STP_UpdateEmployee" FunctionName="EmployeeDBModel.Store.STP_UpdateEmployee" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
